@@ -1,0 +1,25 @@
+services:
+  browchestrator:
+    tty: true
+    build: ../packages/server
+    networks:
+      browchestrator:
+        ipv4_address: 10.37.12.2
+
+  test_app:
+    tty: true
+    image: oven/bun
+    command: bun run src/index.ts
+    volumes:
+      - .:/app
+    working_dir: /app
+    networks:
+      browchestrator:
+        ipv4_address: 10.37.12.3
+
+networks:
+  browchestrator:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.37.12.0/24
