@@ -17,3 +17,5 @@ export const BROWSER_EXECS = {
 };
 export const BROWSER_REG_DIR = path.join(RESOURCE_DIR, "browsers");
 export const BROWSER_REG_META = path.join(BROWSER_REG_DIR, "pm.json");
+
+export const WEBDRIVER_PORT_RANGE: [number, number] = [10000, 30000];
