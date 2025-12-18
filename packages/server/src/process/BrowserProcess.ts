@@ -31,6 +31,7 @@ export class BrowserProcess {
         "--headless",
         `--webdriver=${session.port}`,
         "--enable-experimental-web-platform-features",
+        "about:blank",
       ],
       {
         stdio: "inherit",
