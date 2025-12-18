@@ -2,6 +2,8 @@ services:
   browchestrator:
     tty: true
     build: ../packages/server
+    ports:
+      - "3000:3000"
     networks:
       browchestrator:
         ipv4_address: 10.37.12.2
