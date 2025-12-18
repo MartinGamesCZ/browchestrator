@@ -40,4 +40,14 @@ export class Browser {
 
     return this;
   }
+
+  async screenshot() {
+    const { data } = await this.#client.apiClient.post("/browser/screenshot", {
+      sid: this.#sid,
+    });
+
+    if ("error" in data) throw new Error(data.error);
+
+    return data.result.image;
+  }
 }
