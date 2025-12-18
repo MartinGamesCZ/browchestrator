@@ -17,6 +17,14 @@ export type WebDriverSessionCapabilities = {
   userAgent: string;
 };
 
+export type WebDriverElementLocationStrategy =
+  | "id"
+  | "name"
+  | "class name"
+  | "tag name"
+  | "xpath"
+  | "css selector";
+
 // ----------------------- Response/Body ------------------------
 
 export type WebDriverError = {
@@ -44,3 +52,12 @@ export type WebDriverPostSessionUrlBody = {
 };
 
 export type WebDriverPostSessionUrlResponse = WebDriverResponse<null>;
+
+export type WebDriverPostSessionElementBody = {
+  using: WebDriverElementLocationStrategy;
+  value: string;
+};
+
+export type WebDriverPostSessionElementResponse = WebDriverResponse<{
+  [key: string]: string;
+}>;

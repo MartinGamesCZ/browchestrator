@@ -1,6 +1,7 @@
 import { WEBDRIVER_PORT_RANGE } from "../config";
 import { BrowserSession } from "../session/BrowserSession";
 import { OrchestratorError } from "../types/Error";
+import type { WebDriverElementLocationStrategy } from "../types/WebDriver";
 import { Fmt } from "../utils/Fmt";
 import { Logger } from "../utils/Logger";
 import { Singleton } from "../utils/Singleton";
@@ -70,6 +71,37 @@ export class BrowserProcessOrchestrator extends Singleton {
       return OrchestratorError.WebdriverSessionCreationFailed;
 
     return true;
+  }
+
+  static async findDomElement(
+    sid: string,
+    using: WebDriverElementLocationStrategy,
+    value: string
+  ) {
+    const session = this.getInstance(BrowserProcessOrchestrator)
+      .#sessions.values()
+      .find((s) => s.id == sid);
+    if (!session) return OrchestratorError.SessionNotFound;
+
+    Logger.log(
+      "BrowserPO",
+      Fmt.f("Finding element {value} using {using} in session {sid}", {
+        sid,
+        using,
+        value,
+      })
+    );
+
+    const webdriver = new WebDriver(`http://localhost:${session.port}`);
+    const wdSession = await webdriver.postSessionElement(
+      session.webdriverSid,
+      using,
+      value
+    );
+    if ("error" in wdSession)
+      return OrchestratorError.WebdriverSessionCreationFailed;
+
+    return { elementId: Object.values(wdSession.value)[0]! };
   }
 
   static getFreePorts() {

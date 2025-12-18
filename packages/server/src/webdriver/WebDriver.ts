@@ -3,7 +3,9 @@
 
 import type { AxiosInstance } from "axios";
 import type {
+  WebDriverElementLocationStrategy,
   WebDriverGetStatusResponse,
+  WebDriverPostSessionElementResponse,
   WebDriverPostSessionResponse,
   WebDriverPostSessionUrlBody,
   WebDriverPostSessionUrlResponse,
@@ -73,5 +75,72 @@ export class WebDriver {
     return data as WebDriverPostSessionUrlResponse;
   }
 
-  // TODO: Rest of spec
+  // GET	/session/{session id}/url: TODO
+  // POST	/session/{session id}/back: TODO
+  // POST	/session/{session id}/forward: TODO
+  // POST	/session/{session id}/refresh: TODO
+  // GET	/session/{session id}/title: TODO
+  // GET	/session/{session id}/window: TODO
+  // DELETE	/session/{session id}/window: TODO
+  // POST	/session/{session id}/window: TODO
+  // GET	/session/{session id}/window/handles: TODO
+  // POST	/session/{session id}/window/new: TODO
+  // POST	/session/{session id}/frame: TODO
+  // POST	/session/{session id}/frame/parent: TODO
+  // GET	/session/{session id}/window/rect: TODO
+  // POST	/session/{session id}/window/rect: TODO
+  // POST	/session/{session id}/window/maximize: TODO
+  // POST	/session/{session id}/window/minimize: TODO
+  // POST	/session/{session id}/window/fullscreen: TODO
+  // GET	/session/{session id}/element/active: TODO
+  // GET	/session/{session id}/element/{element id}/shadow: TODO
+
+  // POST	/session/{session id}/element: TODO
+  async postSessionElement(
+    sid: string,
+    using: WebDriverElementLocationStrategy,
+    value: string
+  ): Promise<WebDriverPostSessionElementResponse> {
+    const { data } = await this.#catchError(
+      this.#client.post(`/session/${sid}/element`, { using, value })
+    );
+
+    return data as WebDriverPostSessionElementResponse;
+  }
+
+  // POST	/session/{session id}/elements: TODO
+  // POST	/session/{session id}/element/{element id}/element: TODO
+  // POST	/session/{session id}/element/{element id}/elements: TODO
+  // POST	/session/{session id}/shadow/{shadow id}/element: TODO
+  // POST	/session/{session id}/shadow/{shadow id}/elements: TODO
+  // GET	/session/{session id}/element/{element id}/selected: TODO
+  // GET	/session/{session id}/element/{element id}/attribute/{name}: TODO
+  // GET	/session/{session id}/element/{element id}/property/{name}: TODO
+  // GET	/session/{session id}/element/{element id}/css/{property name}: TODO
+  // GET	/session/{session id}/element/{element id}/text: TODO
+  // GET	/session/{session id}/element/{element id}/name: TODO
+  // GET	/session/{session id}/element/{element id}/rect: TODO
+  // GET	/session/{session id}/element/{element id}/enabled: TODO
+  // GET	/session/{session id}/element/{element id}/computedrole: TODO
+  // GET	/session/{session id}/element/{element id}/computedlabel: TODO
+  // POST	/session/{session id}/element/{element id}/click: TODO
+  // POST	/session/{session id}/element/{element id}/clear: TODO
+  // POST	/session/{session id}/element/{element id}/value: TODO
+  // GET	/session/{session id}/source: TODO
+  // POST	/session/{session id}/execute/sync: TODO
+  // POST	/session/{session id}/execute/async: TODO
+  // GET	/session/{session id}/cookie: TODO
+  // GET	/session/{session id}/cookie/{name}: TODO
+  // POST	/session/{session id}/cookie: TODO
+  // DELETE	/session/{session id}/cookie/{name}: TODO
+  // DELETE	/session/{session id}/cookie: TODO
+  // POST	/session/{session id}/actions: TODO
+  // DELETE	/session/{session id}/actions: TODO
+  // POST	/session/{session id}/alert/dismiss: TODO
+  // POST	/session/{session id}/alert/accept: TODO
+  // GET	/session/{session id}/alert/text: TODO
+  // POST	/session/{session id}/alert/text: TODO
+  // GET	/session/{session id}/screenshot: TODO
+  // GET	/session/{session id}/element/{element id}/screenshot: TODO
+  // POST	/session/{session id}/print: TODO
 }
