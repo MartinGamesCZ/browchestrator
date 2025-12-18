@@ -1,6 +1,7 @@
 import { WEBDRIVER_PORT_RANGE } from "../config";
 import { BrowserSession } from "../session/BrowserSession";
 import { OrchestratorError } from "../types/Error";
+import { Fmt } from "../utils/Fmt";
 import { Logger } from "../utils/Logger";
 import { Singleton } from "../utils/Singleton";
 import { WebDriver } from "../webdriver/WebDriver";
@@ -48,6 +49,27 @@ export class BrowserProcessOrchestrator extends Singleton {
     Logger.log("BrowserPO", "Session created");
 
     return session;
+  }
+
+  static async setSessionUrl(sid: string, url: string) {
+    const session = this.getInstance(BrowserProcessOrchestrator)
+      .#sessions.values()
+      .find((s) => s.id == sid);
+    if (!session) return OrchestratorError.SessionNotFound;
+
+    Logger.log(
+      "BrowserPO",
+      Fmt.f("Setting session {sid} url to {url}", { sid, url })
+    );
+
+    const webdriver = new WebDriver(`http://localhost:${session.port}`);
+    const wdSession = await webdriver.postSessionUrl(session.webdriverSid, {
+      url,
+    });
+    if ("error" in wdSession)
+      return OrchestratorError.WebdriverSessionCreationFailed;
+
+    return true;
   }
 
   static getFreePorts() {

@@ -4,4 +4,5 @@ export enum OrchestratorError {
   WebdriverSessionCreationFailed = "ERR_WEBDRIVER_SESSION_CREATION_FAILED",
 
   NoFreePort = "ERR_NO_FREE_PORT",
+  SessionNotFound = "ERR_SESSION_NOT_FOUND",
 }

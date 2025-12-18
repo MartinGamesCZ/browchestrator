@@ -11,6 +11,7 @@ export class ApiServer extends Singleton {
     super();
 
     this.#expressApp = express();
+    this.#expressApp.use(express.json());
     this.#expressApp.use(this.#loggingMiddleware);
   }
 
