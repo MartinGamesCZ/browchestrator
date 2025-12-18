@@ -1,3 +1,3 @@
-import * as eHello from "./endpoints/hello";
+import * as eServerInfo from "./endpoints/server_info";
 
-export const endpoints = [eHello];
+export const endpoints = [eServerInfo];
