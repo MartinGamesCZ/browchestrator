@@ -4,6 +4,7 @@
 import type { AxiosInstance } from "axios";
 import type {
   WebDriverElementLocationStrategy,
+  WebDriverGetSessionScreenshotResponse,
   WebDriverGetStatusResponse,
   WebDriverPostSessionElementResponse,
   WebDriverPostSessionResponse,
@@ -140,7 +141,18 @@ export class WebDriver {
   // POST	/session/{session id}/alert/accept: TODO
   // GET	/session/{session id}/alert/text: TODO
   // POST	/session/{session id}/alert/text: TODO
+
   // GET	/session/{session id}/screenshot: TODO
+  async getSessionScreenshot(
+    sid: string
+  ): Promise<WebDriverGetSessionScreenshotResponse> {
+    const { data } = await this.#catchError(
+      this.#client.get(`/session/${sid}/screenshot`)
+    );
+
+    return data as WebDriverGetSessionScreenshotResponse;
+  }
+
   // GET	/session/{session id}/element/{element id}/screenshot: TODO
   // POST	/session/{session id}/print: TODO
 }

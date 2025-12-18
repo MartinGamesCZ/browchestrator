@@ -37,7 +37,7 @@ export class BrowserProcessOrchestrator extends Singleton {
 
     // TODO: Replace for proper waiting for browser to start
     //       maybe by making it open some url on load
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 300));
 
     Logger.log("BrowserPO", "Starting webdriver session...");
     const webdriver = new WebDriver(`http://localhost:${port}`);
@@ -102,6 +102,29 @@ export class BrowserProcessOrchestrator extends Singleton {
       return OrchestratorError.WebdriverSessionCreationFailed;
 
     return { elementId: Object.values(wdSession.value)[0]! };
+  }
+
+  static async screenshot(sid: string) {
+    const session = this.getInstance(BrowserProcessOrchestrator)
+      .#sessions.values()
+      .find((s) => s.id == sid);
+    if (!session) return OrchestratorError.SessionNotFound;
+
+    Logger.log(
+      "BrowserPO",
+      Fmt.f("Taking screenshot of session {sid}", { sid })
+    );
+
+    const webdriver = new WebDriver(`http://localhost:${session.port}`);
+    const wdSession = await webdriver.getSessionScreenshot(
+      session.webdriverSid
+    );
+    if ("error" in wdSession)
+      return OrchestratorError.WebdriverSessionCreationFailed;
+
+    return {
+      image: wdSession.value,
+    };
   }
 
   static getFreePorts() {

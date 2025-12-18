@@ -61,3 +61,5 @@ export type WebDriverPostSessionElementBody = {
 export type WebDriverPostSessionElementResponse = WebDriverResponse<{
   [key: string]: string;
 }>;
+
+export type WebDriverGetSessionScreenshotResponse = WebDriverResponse<string>;
