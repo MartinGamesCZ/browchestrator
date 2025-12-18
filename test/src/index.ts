@@ -9,3 +9,6 @@ const client = await BrowchestratorClient.create({
 
 const browser = await client.createBrowser();
 browser.openURL("http://localhost:8080");
+
+const element = await browser.dom.querySelector(".pageTitle");
+console.log(element);

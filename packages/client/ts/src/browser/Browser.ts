@@ -1,11 +1,23 @@
 import type { BrowchestratorClient } from "../BrowchestratorClient";
+import { BrowserDOM } from "./dom/BrowserDOM";
 
 export class Browser {
   #client: BrowchestratorClient;
   #sid: string = "";
 
+  #dom: BrowserDOM;
+
   constructor(client: BrowchestratorClient) {
     this.#client = client;
+    this.#dom = new BrowserDOM(this.#client, this);
+  }
+
+  public get dom() {
+    return this.#dom;
+  }
+
+  public get sid() {
+    return this.#sid;
   }
 
   async create() {
