@@ -154,5 +154,6 @@ export class WebDriver {
   }
 
   // GET	/session/{session id}/element/{element id}/screenshot: TODO
-  // POST	/session/{session id}/print: TODO
+
+  // POST	/session/{session id}/print: unsupported by servo
 }
